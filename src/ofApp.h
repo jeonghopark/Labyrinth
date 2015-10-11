@@ -8,8 +8,10 @@
 struct Particle {
     
     ofPolyline pathPolyLine;
-    float movingFactor;
-    float movingSpeed;
+    float movingFactor = 0;
+    float movingSpeed = ofRandom(0.1, 1.0) * 0.005;
+    
+    int size = 5;
     
 };
 

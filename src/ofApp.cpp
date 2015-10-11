@@ -29,6 +29,10 @@ void ofApp::update(){
     
     for (int i=0; i<particles.size(); i++) {
         particles[i].movingFactor = particles[i].movingFactor + particles[i].movingSpeed;
+        
+        if (particles[i].movingFactor > 1.0) {
+            particles[i].movingFactor = 0;
+        }
     }
 
 }
@@ -56,16 +60,40 @@ void ofApp::draw(){
 
     ofPushStyle();
     
-    ofSetColor(255, 0, 0, 255);
+    ofSetColor(255, 180);
     for (int i=0; i<particles.size(); i++) {
         particles[i].pathPolyLine.draw();
-        
-        float _percent = sin( ofDegToRad(particles[i].movingFactor) ) * 0.5 + 0.5;
+    }
+    
+    ofSetColor(255, 255);
+    for (int i=0; i<particles.size(); i++) {
+        float _percent = particles[i].movingFactor;
         ofVec2f _v = particles[i].pathPolyLine.getPointAtPercent( _percent );
-        
-        ofDrawCircle( _v, 3 );
+        ofDrawCircle( _v, particles[i].size );
+    }
+
+    
+    ofSetColor(255, 120);
+
+    for (int i=0; i<particles.size(); i++) {
+        float _percentS = particles[i].movingFactor;
+        ofVec2f _vS = particles[i].pathPolyLine.getPointAtPercent( _percentS );
+
+        for (int j=0; j<particles.size(); j++) {
+
+            if (i != j) {
+                float _percentE = particles[i].movingFactor;
+                ofVec2f _vE = particles[j].pathPolyLine.getPointAtPercent( _percentE );
+                
+                if ( ( _vE.distance(_vS) > 50 ) && ( _vE.distance(_vS) < 100 ) ){
+                    ofDrawLine( _vS, _vE );
+                }
+            }
+            
+        }
         
     }
+
     
     ofPopStyle();
     
@@ -78,7 +106,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::particleInit(){
     
-    int _numParticles = 100;
+    int _numParticles = 200;
     particles.resize(_numParticles);
     
     for (int j=0; j<_numParticles; j++) {
@@ -118,9 +146,7 @@ void ofApp::particleInit(){
         }
         
         particles[j].pathPolyLine = _p;
-        
-        particles[j].movingFactor = 0;
-        particles[j].movingSpeed = ofRandom(0.5, 0.7);
+    
     }
     
 
