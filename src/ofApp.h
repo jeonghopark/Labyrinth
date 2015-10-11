@@ -9,9 +9,9 @@ struct Particle {
     
     ofPolyline pathPolyLine;
     float movingFactor = 0;
-    float movingSpeed = ofRandom(0.1, 1.0) * 0.005;
-    
-    int size = 5;
+    float movingSpeed = ofRandom(0.1, 0.6) * 0.005;
+    float direction = 1;
+    int size = 3;
     
 };
 
@@ -42,7 +42,10 @@ class ofApp : public ofBaseApp{
     float mainOffSetXPos, mainOffSetYPos;
 
     
-    void particleInit();
+    void initParticles();
+    
+    void drawParticles();
+    
     vector<Particle> particles;
     
     
