@@ -25,8 +25,6 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
 
-    gui->FrameRate = ofToString( ofGetFrameRate(), 2 );
-    
     for (int i=0; i<particles.size(); i++) {
         particles[i].movingFactor = particles[i].movingFactor + particles[i].movingSpeed *  particles[i].direction;
         
@@ -70,7 +68,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::initParticles(){
     
-    int _numParticles = 160;
+    int _numParticles = 260;
     particles.resize(_numParticles);
     
     for (int j=0; j<_numParticles; j++) {
@@ -144,12 +142,18 @@ void ofApp::drawParticles(){
         particles[i].pathPolyLine.draw();
     }
     
-    ofSetColor(255, 255);
+    ofPushStyle();
+    
+    ofSetColor( 255, 255 );
+
     for (int i=0; i<particles.size(); i++) {
+        
         float _percent = particles[i].movingFactor;
         ofVec2f _v = particles[i].pathPolyLine.getPointAtPercent( _percent );
         ofDrawCircle( _v, particles[i].size );
+        
     }
+    ofPopStyle();
     
     
     ofSetColor(255, 120);
@@ -164,7 +168,8 @@ void ofApp::drawParticles(){
                 float _percentE = particles[j].movingFactor;
                 ofVec2f _vE = particles[j].pathPolyLine.getPointAtPercent( _percentE );
                 
-                if ( ( _vE.distance(_vS) > 50 ) && ( _vE.distance(_vS) < 100 ) ){
+                float _dist = _vE.distance(_vS);
+                if ( abs(75 - _dist) < 25 ){
                     ofDrawLine( _vS, _vE );
                 }
             }

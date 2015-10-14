@@ -11,7 +11,7 @@ struct Particle {
     float movingFactor = 0;
     float movingSpeed = ofRandom(0.1, 0.6) * 0.005;
     float direction = 1;
-    int size = 3;
+    int size = ofRandom(2, 5);
     
 };
 
