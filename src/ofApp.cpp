@@ -112,9 +112,12 @@ void ofApp::initParticles(){
                     break;
             }
 
-//            ofVec2f _vC = baseArch.framesCenter[abs(_xIndex)%21+1][abs(_yIndex)%4+1];
-//            _p.curveTo(_vC);
 
+            // Curve
+            //            ofVec2f _vC = baseArch.framesCenter[abs(_xIndex)%21+1][abs(_yIndex)%4+1];
+            //            _p.curveTo(_vC);
+
+            // Line
             ofVec2f _vD = baseArch.framesCenter[abs(_xIndex)%23][abs(_yIndex)%6];
             _p.addVertex( _vD );
         }
